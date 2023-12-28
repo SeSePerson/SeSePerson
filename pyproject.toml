@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "seseperson"
+version = "0.0.0"
+description = "A highly intelligent AI"
+authors = ["coming <kangming06@hotmail.com>"]
+readme = "README.md"
+license = "GPL-3.0"
+repository="https://github.com/kangming06/SeSePerson"
+
+
+[[tool.poetry.source]]
+name = "tsinghua-mirror"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+priority = "default"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+nonebot2 = "^2.1.3"
+rich = "^13.7.0"
+pyyaml = "^6.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
