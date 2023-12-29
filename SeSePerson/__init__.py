@@ -6,7 +6,7 @@ from nonebot.adapters.onebot.v12 import Adapter as OneBotV12Adapter
 
 from .configs import Config
 
-__conf_path = Path("") / "configs.yml"
+__conf_path = Path("") / "config.yml"
 __conf = Config(__conf_path)
 
 conf = __conf.parse()
