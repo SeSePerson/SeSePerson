@@ -1,10 +1,10 @@
 from typing import Callable, Optional
 
-from rich.console import Console as C
+from rich.console import Console as RichConsole
 
 
-class Console(C):
-    def __init__(self, console: C = C(), *args, **kwargs):
+class Console(RichConsole):
+    def __init__(self, console: RichConsole = RichConsole(), *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.console = console
 

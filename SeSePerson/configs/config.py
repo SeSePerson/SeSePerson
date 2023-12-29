@@ -6,7 +6,7 @@ import yaml
 from .create import init_config
 from .models import ConfigModel, BotConfig, RuntimeConfig
 
-_DEFAULT_CONFIG_PATH = Path(__file__) / ".." / "default_config.yml"
+_DEFAULT_CONFIG_PATH = Path(__file__).parent / "default_config.yml"
 
 
 class Config:

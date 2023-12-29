@@ -17,6 +17,7 @@ class BotConfig(BaseModel):
 
 class ConfigModel(BaseModel):
     ConfigVersion: str
+    BotConfig: BotConfig
 
 
 class RuntimeConfig(BaseModel):
