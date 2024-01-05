@@ -13,7 +13,7 @@ def get_config_path(name: str):
 
 
 def create_default_config(path: Path, model: Type[BaseModel]) -> None:
-    path.write_text(model().json(ensure_ascii=False,indent=2), encoding="utf-8")
+    path.write_text(model().json(by_alias=True, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def get_config(name: str, model: Type[BaseModel]) -> BaseModel:

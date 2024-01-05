@@ -1,9 +1,5 @@
-from pathlib import Path
-from time import sleep
-
 import nonebot
-import nonebot.adapters.onebot.v12 as onebot
-from nonebot import logger
+from nonebot.adapters import onebot
 
 from SeSePerson.utils import config
 
@@ -18,12 +14,12 @@ def driver():
 
 def init():
     bot_config = config.get_config("nonebot", nonebot.config.Config)
-    onebot_config = config.get_config("onebot", onebot.adapter.Config)
+    onebot_config = config.get_config("onebot", onebot.v12.adapter.Config)
 
-    nonebot.init(**bot_config.dict(), **onebot_config.dict())
+    nonebot.init(**bot_config.dict(by_alias=True), **onebot_config.dict(by_alias=True))
     # nonebot.init()
 
-    driver().register_adapter(onebot.Adapter)
+    driver().register_adapter(onebot.V12Adapter)
     nonebot.load_plugins("SeSePerson/plugins")
 
 
