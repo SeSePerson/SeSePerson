@@ -2,14 +2,10 @@ from pathlib import Path
 from time import sleep
 
 import nonebot
-from nonebot.adapters.onebot.v12 import Adapter as OneBotV12Adapter
+import nonebot.adapters.onebot.v12 as onebot
+from nonebot import logger
 
-from .configs import Config
-
-__conf_path = Path("") / "config.yml"
-__conf = Config(__conf_path)
-
-conf = __conf.parse()
+from SeSePerson.utils import config
 
 
 def asgi():
@@ -21,12 +17,15 @@ def driver():
 
 
 def init():
-    nonebot.init(**__conf.get_runtime_conf())
-    driver().register_adapter(OneBotV12Adapter)
+    bot_config = config.get_config("nonebot", nonebot.config.Config)
+    onebot_config = config.get_config("onebot", onebot.adapter.Config)
+
+    nonebot.init(**bot_config.dict(), **onebot_config.dict())
+    # nonebot.init()
+
+    driver().register_adapter(onebot.Adapter)
     nonebot.load_plugins("SeSePerson/plugins")
-    sleep(3)
 
 
 def run():
-    log_level = "debug" if conf.BotConfig.debug else "warning"
-    nonebot.run(log_level=log_level)
+    nonebot.run()
