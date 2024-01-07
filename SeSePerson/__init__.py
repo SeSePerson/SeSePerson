@@ -1,7 +1,7 @@
 import nonebot
 from nonebot.adapters import onebot
 
-from SeSePerson.utils import config
+from .utils import config
 
 
 def asgi():
