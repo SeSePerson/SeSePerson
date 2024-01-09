@@ -51,8 +51,10 @@ class Session:
                     contact=self.contact,
                     time__gte=now - timedelta(hours=1)
                 ).order_by('-time').limit(out.max_history + 1)
-                history = [{"role": msg.role.value, "content": msg.content} for msg in history]
+                history = [{"role": msg.role.value, "content": msg.content} for msg in reversed(history)]
                 history.insert(0, {"role": "system", "content": out.template})
+
+                logger.debug(json.dumps(history, ensure_ascii=False, indent=2))
 
                 self.session = aiohttp.ClientSession()
                 self.response = await self.session.post(
