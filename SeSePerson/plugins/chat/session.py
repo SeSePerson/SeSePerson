@@ -1,7 +1,7 @@
 import json
 import re
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Optional
 
 import aiohttp
@@ -19,10 +19,11 @@ class SessionData:
 
 
 class Session:
-    def __init__(self, openai_key: str, template: str, max_history: int):
+    def __init__(self, openai_key: str, template: str, max_history: int,time_limit:int):
         self.openai_key: str = openai_key
         self.template: str = template
         self.max_history: int = max_history
+        self.time_limit: int = time_limit
 
     def talk(self, contact_id: str, text: str, name: Optional[str]):
         # logger.debug(self.template)
@@ -39,7 +40,7 @@ class Session:
                 self.buffer = ""
 
             async def __aenter__(self):
-                now = datetime.now()
+                now = datetime.now(timezone.utc)
                 # 查询记录
                 self.contact = (await Contact.get_or_create(id=contact_id))[0]
                 await Message.create(
@@ -49,7 +50,7 @@ class Session:
                 )
                 history = await Message.filter(
                     contact=self.contact,
-                    time__gte=now - timedelta(hours=1)
+                    time__gte=max(now - timedelta(hours=out.time_limit), self.contact.cutoff)
                 ).order_by('-time').limit(out.max_history + 1)
                 history = [{"role": msg.role.value, "content": msg.content} for msg in reversed(history)]
                 history.insert(0, {"role": "system", "content": out.template})
@@ -129,6 +130,14 @@ class Session:
                 return line
 
         return AnswerStream()
+
+    @staticmethod
+    async def cut_history(contact_id: str, time: datetime = datetime.now()):
+        contact = await Contact.get_or_none(id=contact_id)
+        if contact is None:
+            return
+        contact.cutoff = time
+        await contact.save()
 
     @staticmethod
     def ans_dispose(msg: str):

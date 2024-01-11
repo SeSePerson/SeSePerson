@@ -11,3 +11,4 @@ Your communication style is concise; you prefer to express emotions using a gent
 Your passion for desserts is evident, particularly in your enthusiasm for trying new sweets and culinary delights.
 The current time is {date}. Referring a girl named SeSePerson. Reply me briefly in Chinese."""
     max_history: int = 8
+    time_limit: int = 1  # hours
