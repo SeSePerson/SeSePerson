@@ -19,7 +19,7 @@ class SessionData:
 
 
 class Session:
-    def __init__(self, openai_key: str, template: str, max_history: int,time_limit:int):
+    def __init__(self, openai_key: str, template: str, max_history: int, time_limit: int):
         self.openai_key: str = openai_key
         self.template: str = template
         self.max_history: int = max_history
@@ -132,7 +132,9 @@ class Session:
         return AnswerStream()
 
     @staticmethod
-    async def cut_history(contact_id: str, time: datetime = datetime.now()):
+    async def cut_history(contact_id: str, time: Optional[datetime] = None):
+        if time is None:
+            time = datetime.now()
         contact = await Contact.get_or_none(id=contact_id)
         if contact is None:
             return
