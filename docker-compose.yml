@@ -1,0 +1,13 @@
+version: "3"
+services:
+  SeSePerson:
+    build: .
+    container_name: SeSePerson # 容器名称
+    ports:
+      - "8788:8788" # 映射端口到宿主机 宿主机端口:容器端口
+    network_mode: bridge
+    restart: unless-stopped
+    volumes:
+      - ~/.SeSePerson/data:/app/SeSePerson/database        # 这几条为挂载工作数据目录与配置文件
+#      - ~/.SeSePerson/accounts:/app/SeSePerson/accounts   # 挂载格式为 宿主机路径:容器路径
+      - ~/.SeSePerson/configs:/app/SeSePerson/configs      # 默认的工作路径为 ~/.SeSePerson 注意该目录默认状态下是隐藏的
