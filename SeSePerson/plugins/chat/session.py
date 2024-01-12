@@ -53,7 +53,10 @@ class Session:
                     time__gte=max(now - timedelta(hours=out.time_limit), self.contact.cutoff)
                 ).order_by('-time').limit(out.max_history + 1)
                 history = [{"role": msg.role.value, "content": msg.content} for msg in reversed(history)]
-                history.insert(0, {"role": "system", "content": out.template})
+                history.insert(0, {
+                    "role": "system",
+                    "content": out.template.format(date=now.strftime("%Y-%m-%d %H:%M"))
+                })
 
                 logger.debug(json.dumps(history, ensure_ascii=False, indent=2))
 
