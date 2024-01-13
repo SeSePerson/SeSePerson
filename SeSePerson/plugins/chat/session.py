@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Optional
 
 import aiohttp
+import pytz
 from nonebot import logger
 
 from SeSePerson.plugins.chat import Contact
@@ -40,7 +41,10 @@ class Session:
                 self.buffer = ""
 
             async def __aenter__(self):
-                now = datetime.now(timezone.utc)
+                # hack
+                tz = pytz.timezone('Asia/Shanghai')
+                now = datetime.now(tz)
+                
                 # 查询记录
                 self.contact = (await Contact.get_or_create(id=contact_id))[0]
                 await Message.create(
