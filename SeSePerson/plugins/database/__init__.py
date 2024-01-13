@@ -12,7 +12,7 @@ BASE_DATABASE_DIR.mkdir(exist_ok=True)
 TORTOISE_CONFIG = {
     "connections": {},
     "apps": {},
-    "use_tz": False,
+    "use_tz": True,
     "timezone": "Asia/Shanghai",
 }
 
