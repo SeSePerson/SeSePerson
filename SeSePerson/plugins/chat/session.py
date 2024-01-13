@@ -1,11 +1,11 @@
 import json
 import re
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from typing import List, Dict, Optional
 
 import aiohttp
-import pytz
+import tortoise.timezone
 from nonebot import logger
 
 from SeSePerson.plugins.chat import Contact
@@ -41,10 +41,8 @@ class Session:
                 self.buffer = ""
 
             async def __aenter__(self):
-                # hack
-                tz = pytz.timezone('Asia/Shanghai')
-                now = datetime.now(tz)
-                
+                now = tortoise.timezone.now()
+
                 # 查询记录
                 self.contact = (await Contact.get_or_create(id=contact_id))[0]
                 await Message.create(
@@ -52,9 +50,13 @@ class Session:
                     role=MessageRole.USER,
                     content=text
                 )
+                cut = now - timedelta(hours=out.time_limit)
+                if self.contact.cutoff is not None:
+                    cut = max(cut, self.contact.cutoff)
+
                 history = await Message.filter(
                     contact=self.contact,
-                    time__gte=max(now - timedelta(hours=out.time_limit), self.contact.cutoff)
+                    time__gte=cut
                 ).order_by('-time').limit(out.max_history + 1)
                 history = [{"role": msg.role.value, "content": msg.content} for msg in reversed(history)]
                 history.insert(0, {
@@ -141,7 +143,7 @@ class Session:
     @staticmethod
     async def cut_history(contact_id: str, time: Optional[datetime] = None):
         if time is None:
-            time = datetime.now()
+            time = tortoise.timezone.now()
         contact = await Contact.get_or_none(id=contact_id)
         if contact is None:
             return

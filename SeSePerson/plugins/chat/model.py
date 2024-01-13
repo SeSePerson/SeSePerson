@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 from enum import Enum
 
 from tortoise import Model
@@ -12,7 +11,7 @@ add_plugin(APP_NAME, [__name__])
 
 class Contact(Model):
     id = CharField(max_length=20, pk=True)
-    cutoff = DatetimeField(default=datetime.min.replace(tzinfo=timezone.utc))
+    cutoff = DatetimeField(null=True)
 
 
 class MessageRole(Enum):

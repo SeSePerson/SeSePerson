@@ -1,8 +1,7 @@
-import hashlib
 from pathlib import Path
 from typing import Annotated
 
-from nonebot import on_message, logger, require, on_command
+from nonebot import on_message, require, on_command
 from nonebot.adapters.onebot import v12 as onebot
 from nonebot.params import EventPlainText
 from nonebot.rule import to_me
