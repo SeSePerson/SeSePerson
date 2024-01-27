@@ -10,9 +10,7 @@ ADD . /app/
 
 EXPOSE 8788
 
-RUN sed -i "s@http://deb.debian.org@http://mirrors.aliyun.com@g" /etc/apt/sources.list && rm -Rf /var/lib/apt/lists/* && apt-get update
-
-RUN apt install curl -y
+RUN apt-get update && apt-get install -y curl
 
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
