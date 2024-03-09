@@ -1,8 +1,8 @@
 import random
 
-from nonebot import on_command, logger
+from nonebot import on_command
 from nonebot.internal.adapter import MessageTemplate
-from nonebot.internal.params import ArgStr, ArgPlainText
+from nonebot.internal.params import ArgPlainText
 from nonebot.typing import T_State
 
 from SeSePerson.utils.config import get_config
@@ -26,6 +26,7 @@ async def _(state: T_State):
 
 @katakana.got("ans")
 async def _(state: T_State, ans: str = ArgPlainText()):
+    ans = ans.lower()
     # last_ans = state["last_ans"]
     if ans.strip() == state["right_ans"]:
         await katakana.finish(MessageTemplate('答对啦awa~ "{question}"的罗马音就是"{right_ans}"呢~'))

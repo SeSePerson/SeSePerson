@@ -20,5 +20,5 @@ class Config(BaseModel):
         'ビョ': 'byo', 'ピャ': 'pya', 'ピュ': 'pyu', 'ピョ': 'pyo'
     }
     max_try: int = 5
-    break_key: Set[str] = {"ans", "break", "stop", "停"}
+    break_key: Set[str] = {"ans", "break", "stop", "."}
     hint_key: Set[str] = {"tips", "hint", "?"}
