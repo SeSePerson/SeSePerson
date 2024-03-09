@@ -1,4 +1,5 @@
 from argparse import Namespace
+from asyncio import sleep
 from typing import Annotated
 
 import nonebot.adapters.onebot.v12 as onebot
@@ -54,8 +55,11 @@ async def _(title: Annotated[onebot.Message, ArgPlainText()],
             url: Annotated[onebot.Message, ArgPlainText()],
             image: Annotated[onebot.Message, Arg()]):
     if image.only("image") or image.only("wx.emoji"):
+        # await sleep(10)
+
         file_id = image[0].data.get("file_id")
         logger.debug(file_id)
+
     else:
         await article.send("这个不是图片呢，跳过它了~")
         file_id = None
@@ -66,3 +70,4 @@ async def _(title: Annotated[onebot.Message, ArgPlainText()],
         "url": url,
         "file_id": file_id
     }))
+    await article.send(image)
