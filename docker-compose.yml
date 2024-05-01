@@ -8,6 +8,6 @@ services:
     network_mode: bridge
     restart: unless-stopped
     volumes:
-      - ~/.SeSePerson/data:/app/SeSePerson/database        # 这几条为挂载工作数据目录与配置文件
-#      - ~/.SeSePerson/accounts:/app/SeSePerson/accounts   # 挂载格式为 宿主机路径:容器路径
-      - ~/.SeSePerson/configs:/app/SeSePerson/configs      # 默认的工作路径为 ~/.SeSePerson 注意该目录默认状态下是隐藏的
+      - ~/.SeSePerson/data:/app/seseperson/database        # 这几条为挂载工作数据目录与配置文件
+#      - ~/.SeSePerson/accounts:/app/seseperson/accounts   # 挂载格式为 宿主机路径:容器路径
+      - ~/.SeSePerson/configs:/app/seseperson/configs      # 默认的工作路径为 ~/.seseperson 注意该目录默认状态下是隐藏的

@@ -22,3 +22,8 @@ class Config(BaseModel):
     max_try: int = 5
     break_key: Set[str] = {"ans", "break", "stop", "."}
     hint_key: Set[str] = {"tips", "hint", "?"}
+    allow_neg: bool = False
+    base_point: int = 100
+    hint_cost :int = 100
+    bonus: int = 50
+    max_rank: int =10

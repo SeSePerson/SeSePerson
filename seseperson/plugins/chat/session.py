@@ -8,8 +8,8 @@ import aiohttp
 import tortoise.timezone
 from nonebot import logger
 
-from SeSePerson.plugins.chat import Contact
-from SeSePerson.plugins.chat.model import Message, MessageRole
+from seseperson.plugins.chat import Contact
+from seseperson.plugins.chat.model import Message, MessageRole
 
 
 @dataclass
@@ -153,5 +153,5 @@ class Session:
     @staticmethod
     def ans_dispose(msg: str):
         msg = msg.strip()
-        msg = re.sub("^(?:SeSePerson|涩涩人).?[:：]", "", msg)
+        msg = re.sub("^(?:seseperson|涩涩人).?[:：]", "", msg)
         return msg.strip()

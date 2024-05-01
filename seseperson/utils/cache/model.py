@@ -7,7 +7,7 @@ from tortoise import Model
 from tortoise.exceptions import DoesNotExist
 from tortoise.fields import CharField, UUIDField
 
-from SeSePerson.plugins.database import add_plugin
+from seseperson.plugins.database import add_plugin
 
 APP_NAME = "cache"
 add_plugin(APP_NAME, [__name__])
