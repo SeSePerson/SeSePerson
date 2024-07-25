@@ -1,5 +1,4 @@
 from argparse import Namespace
-from asyncio import sleep
 from typing import Annotated
 
 import nonebot.adapters.onebot.v12 as onebot
