@@ -6,7 +6,7 @@ from nonebot.adapters.onebot import v12 as onebot
 from nonebot.params import EventPlainText
 from nonebot.rule import to_me
 
-from SeSePerson.utils.config import get_config
+from seseperson.utils.config import get_config
 from .config import Config
 from .model import Contact
 from .session import Session

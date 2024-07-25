@@ -151,7 +151,7 @@ dmypy.json
 config.yml
 nonebot_plugins.json
 .env.prod
-SeSePerson/configs
+seseperson/configs
 
 #data
-SeSePerson/database
+seseperson/database

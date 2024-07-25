@@ -20,7 +20,7 @@ def init():
     # nonebot.init()
 
     driver().register_adapter(onebot.V12Adapter)
-    nonebot.load_plugins("SeSePerson/plugins")
+    nonebot.load_plugins("seseperson/plugins")
 
 
 def run():

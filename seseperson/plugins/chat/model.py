@@ -3,7 +3,7 @@ from enum import Enum
 from tortoise import Model
 from tortoise.fields import CharField, IntField, ForeignKeyField, TextField, DatetimeField, CharEnumField
 
-from SeSePerson.plugins.database import add_plugin
+from seseperson.plugins.database import add_plugin
 
 APP_NAME = "chat"
 add_plugin(APP_NAME, [__name__])
