@@ -73,7 +73,7 @@ class Session:
                         "Content-Type": "application/json",
                         "Authorization": f"Bearer {out.openai_key}", },
                     json={
-                        "model": "gpt-4-1106-preview",
+                        "model": "gpt-4o",
                         "messages": history,
                         "temperature": 1,
                         "frequency_penalty": 0.3,
@@ -134,7 +134,7 @@ class Session:
 
                 # 如果buffer中包含换行符，那么返回换行符之前的内容，并更新buffer
                 self.buffer = out.ans_dispose(self.buffer)
-                self.ans += self.buffer
+                self.ans += self.buffer + '\n'
                 line, _, self.buffer = self.buffer.partition("\n")
                 return line
 
