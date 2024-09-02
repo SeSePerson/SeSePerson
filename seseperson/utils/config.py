@@ -3,7 +3,7 @@ from typing import Type, TypeVar
 
 from pydantic import BaseModel
 
-BASE_CONFIG_DIR = (Path(__file__).parent.parent / "configs").resolve()
+BASE_CONFIG_DIR = (Path(__file__).parents[2] / "configs").resolve()
 BASE_CONFIG_DIR.mkdir(exist_ok=True)
 
 

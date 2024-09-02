@@ -6,7 +6,7 @@ from typing import Iterable, Union, Optional
 from nonebot import get_driver, logger
 from tortoise import Tortoise
 
-BASE_DATABASE_DIR = (Path(__file__).parent.parent.parent / "database").resolve()
+BASE_DATABASE_DIR = (Path(__file__).parents[3] / "data").resolve()
 BASE_DATABASE_DIR.mkdir(exist_ok=True)
 
 TORTOISE_CONFIG = {
