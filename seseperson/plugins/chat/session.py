@@ -26,7 +26,7 @@ class Session:
         self.max_history: int = max_history
         self.time_limit: int = time_limit
 
-    def talk(self, contact_id: str, text: str, name: Optional[str]):
+    def talk(self, contact_id: str, text: str, name: Optional[str], image: Optional[bytes] = None):
         # logger.debug(self.template)
         # now = datetime.now()
         # template = self.template.format(date=now.strftime("%Y-%m-%d %H:%M"))
@@ -48,7 +48,8 @@ class Session:
                 await Message.create(
                     contact=self.contact,
                     role=MessageRole.USER,
-                    content=text
+                    content=text,
+                    image=image
                 )
                 cut = now - timedelta(hours=out.time_limit)
                 if self.contact.cutoff is not None:
@@ -58,7 +59,11 @@ class Session:
                     contact=self.contact,
                     time__gte=cut
                 ).order_by('-time').limit(out.max_history + 1)
-                history = [{"role": msg.role.value, "content": msg.content} for msg in reversed(history)]
+                history = [
+                    msg.to_dict(enable_image=(i >= len(history) - 2))  # 只有最后四条消息启用 enable_image
+                    for i, msg in enumerate(reversed(history))
+                ]
+
                 history.insert(0, {
                     "role": "system",
                     "content": out.template.format(date=now.strftime("%Y-%m-%d %H:%M"))
@@ -68,16 +73,16 @@ class Session:
 
                 self.session = aiohttp.ClientSession()
                 self.response = await self.session.post(
-                    "https://api.openai-proxy.com/v1/chat/completions",
+                    "http://localhost:2999/v1/chat/completions",
                     headers={
                         "Content-Type": "application/json",
                         "Authorization": f"Bearer {out.openai_key}", },
                     json={
-                        "model": "gpt-4o",
+                        "model": "deepseek-v3",
                         "messages": history,
-                        "temperature": 1,
+                        "temperature": 0.7,
                         "frequency_penalty": 0.3,
-                        "max_tokens": 1024,
+                        "max_tokens": 4096,
                         "stream": True,  # 启用流式API
                     },
                     timeout=60,
@@ -153,5 +158,5 @@ class Session:
     @staticmethod
     def ans_dispose(msg: str):
         msg = msg.strip()
-        msg = re.sub("^(?:seseperson|涩涩人).?[:：]", "", msg)
+        msg = re.sub(r"(?:seseperson|涩涩人)[\s\S]?[:：]", "", msg, flags=re.IGNORECASE)
         return msg.strip()

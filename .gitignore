@@ -141,9 +141,6 @@ dmypy.json
 # for JetBrain Pycharm
 .idea
 
-/accounts/*
-/data/*
-
 # for MacOS
 .DS_Store
 

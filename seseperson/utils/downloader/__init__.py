@@ -4,7 +4,7 @@ from aiohttp import ClientTimeout
 from .exceptions import FileTooLargeError
 
 
-async def download_url(url, max_size=32 * 1024 * 1024, timeout=20):
+async def download_url(url, max_size=32 * 1024 * 1024, timeout=20) -> bytes:
     timeout = ClientTimeout(total=timeout)
 
     async with aiohttp.ClientSession(timeout=timeout) as session:
